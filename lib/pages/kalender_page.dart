@@ -3,9 +3,6 @@ import 'package:flutter/material.dart';
 import '../functions/wochen_tage.dart';
 import '../widgets/kalender.dart';
 import '../functions/monats_name.dart';
-import '../functions/tage_im_monat.dart';
-import '../functions/erster_wochentag_im_monat.dart';
-import '../functions/kalender_felder.dart';
 
 /// Stellt die Hauptseite des Comic-Kalenders dar.
 ///
@@ -30,12 +27,13 @@ class _KalenderPageState extends State<KalenderPage> {
         child: Column(
           children: [
             Text(monatsName(dargestelltesDatum)),
+
             Row(
               children: [
-                //die drei punkte sind ein Spread Operator, der Liste von wochenTage
-                // in children einzeln auspackt und dann anzeigt.
+                // Der Spread-Operator("...") fügt die erzeugten Widgets
+                // einzeln in die children-Liste ein.
                 ...wochenTage().map((tag) {
-                  return Expanded(child: Text(tag));
+                  return Expanded(child: Center(child: Text(tag)));
                 }),
               ],
             ),

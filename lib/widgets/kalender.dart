@@ -34,7 +34,7 @@ class Kalender extends StatelessWidget {
           ),
           itemCount: tagesFelder.length,
           itemBuilder: (context, index) {
-            return KalenderFeld(tag: tagesFelder[index]);
+            return KalenderFeld(tag: tagesFelder[index], datum: datum);
           },
         );
       },

@@ -26,17 +26,31 @@ class _KalenderPageState extends State<KalenderPage> {
       body: SafeArea(
         child: Column(
           children: [
-            Text(monatsName(dargestelltesDatum)),
-
+            // Erste Row: Monatsnavigation
             Row(
               children: [
-                // Der Spread-Operator("...") fügt die erzeugten Widgets
-                // einzeln in die children-Liste ein.
+                IconButton(
+                  onPressed: () {},
+                  icon: const Icon(Icons.chevron_left),
+                ),
+                Text(monatsName(dargestelltesDatum)),
+                IconButton(
+                  onPressed: () {},
+                  icon: const Icon(Icons.chevron_right),
+                ),
+              ],
+            ),
+
+            // Zweite Row: Wochentage
+            Row(
+              children: [
                 ...wochenTage().map((tag) {
                   return Expanded(child: Center(child: Text(tag)));
                 }),
               ],
             ),
+
+            // Kalenderraster
             Expanded(child: Kalender(datum: dargestelltesDatum)),
           ],
         ),

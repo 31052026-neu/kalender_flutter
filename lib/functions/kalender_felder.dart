@@ -2,8 +2,8 @@ import 'erster_wochentag_im_monat.dart';
 import 'tage_im_monat.dart';
 
 /// Erstellt die Felder für den Kalender des angegebenen Monats.
-List<String> kalenderFelder(DateTime datum) {
-  List<String> felder = [];
+List<DateTime> kalenderFelder(DateTime datum) {
+  List<DateTime> felder = [];
 
   // Anzahl der Tage im Vormonat.
   int tageImVormonat = tageImMonat(DateTime(datum.year, datum.month - 1, 1));
@@ -16,12 +16,12 @@ List<String> kalenderFelder(DateTime datum) {
 
   // Letzte Tage des Vormonats hinzufügen.
   for (int i = 0; i < anzahlFelderVormonat; i++) {
-    felder.add((ersterTagVormonat + i).toString());
+    felder.add(DateTime(datum.year, datum.month - 1, ersterTagVormonat + i));
   }
 
   // Tage des aktuellen Monats hinzufügen.
   for (int i = 1; i <= tageImMonat(datum); i++) {
-    felder.add(i.toString());
+    felder.add(DateTime(datum.year, datum.month, i));
   }
 
   // Bereits belegte Felder der letzten Woche.
@@ -32,7 +32,7 @@ List<String> kalenderFelder(DateTime datum) {
 
   // Erste Tage des Folgemonats hinzufügen.
   for (int i = 1; i < fehlendeFelder + 1; i++) {
-    felder.add(i.toString());
+    felder.add(DateTime(datum.year, datum.month + 1, i));
   }
 
   return felder;

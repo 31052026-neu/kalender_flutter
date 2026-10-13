@@ -1,32 +1,56 @@
 import 'package:flutter/material.dart';
+import 'package:kalender_flutter/functions/KalenderService.dart';
 
-/// Stellt ein einzelnes Tagesfeld des Kalenders dar.
 class KalenderFeld extends StatelessWidget {
-  //speichert den Text, den das Kalenderfeld anzeigen soll.
-  final String tag;
-  final DateTime datum;
+  final void Function(int) onTap;
 
-  const KalenderFeld({super.key, required this.tag, required this.datum});
+  /// Das vollständige Datum dieses Kalenderfeldes.
+  final DateTime tag;
+
+  /// Der aktuell angezeigte Monat.
+  final DateTime heute;
+
+  const KalenderFeld({
+    required this.onTap,
+    required this.tag,
+    required this.heute,
+    super.key,
+  });
 
   @override
   Widget build(BuildContext context) {
-    final DateTime heutigesDatum = DateTime.now();
+    final t = tag;
+    // Prüft, ob das Feld zum angezeigten Monat gehört.
+    bool istAktuellerMonat = t.month == heute.month && t.year == heute.year;
+    // Prüft, ob dieses Kalenderfeld den heutigen Tag darstellt.
+    bool istHeute = istAktuellerMonat && t.day == heute.day;
 
-    bool istHeute = tag == heutigesDatum.day.toString();
+    // Bestimmt die Hintergrundfarbe des Kalenderfeldes.
+    Color hintergrundFarbe = istHeute
+        ? const Color.fromARGB(255, 54, 244, 86)
+        : istAktuellerMonat
+        ? Colors.yellow
+        : Colors.grey;
+    //wenn es Samstag ist und der aktuelle Monat und nicht der heutige Tag ist,
+    // dann färbe die Zelle blau.
+    if (KalenderService.istSamstag(t) && istAktuellerMonat && !istHeute) {
+      hintergrundFarbe = Colors.blue;
+    }
+    if (KalenderService.istSonntag(t) && istAktuellerMonat && !istHeute) {
+      hintergrundFarbe = Colors.red;
+    }
 
-    bool istGleicherMonat = datum.month == heutigesDatum.month;
-
-    bool istGleichesJahr = datum.year == heutigesDatum.year;
-
-    bool istTatsaechlichHeute = istHeute && istGleicherMonat && istGleichesJahr;
-    //tenären Operator implementiert.
-    Color hintergrundFarbe = istTatsaechlichHeute ? Colors.red : Colors.yellow;
-    return Container(
-      decoration: BoxDecoration(
-        color: hintergrundFarbe,
-        border: Border.all(color: Colors.black, width: 2.0),
+    return InkWell(
+      onTap: () {
+        onTap(tag.day);
+      },
+      child: Container(
+        decoration: BoxDecoration(
+          color: hintergrundFarbe,
+          border: Border.all(color: Colors.black, width: 2.0),
+        ),
+        child: Center(child: Text(t.day.toString())),
       ),
-      child: Center(child: Text(tag)),
     );
   }
 }

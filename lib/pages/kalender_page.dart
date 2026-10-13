@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-import '../functions/wochen_tage.dart';
+import '../functions/KalenderService.dart';
 import '../widgets/kalender.dart';
 import '../functions/monats_name.dart';
 
@@ -19,6 +19,8 @@ class KalenderPage extends StatefulWidget {
 class _KalenderPageState extends State<KalenderPage> {
   DateTime dargestelltesDatum = DateTime.now();
 
+  DateTime? ausgewaehltesDatum;
+
   /// Erstellt die Benutzeroberfläche der Kalenderseite.
   @override
   Widget build(BuildContext context) {
@@ -29,32 +31,56 @@ class _KalenderPageState extends State<KalenderPage> {
             // Erste Row: Monatsnavigation
             Row(
               children: [
+                //IconButton links
                 IconButton(
-                  onPressed: () {},
+                  onPressed: () {
+                    _changeMonth(dargestelltesDatum.month - 1);
+                  },
                   icon: const Icon(Icons.chevron_left),
                 ),
                 Text(monatsName(dargestelltesDatum)),
+
+                //IconButton rechts
                 IconButton(
-                  onPressed: () {},
+                  onPressed: () {
+                    _changeMonth(dargestelltesDatum.month + 1);
+                  },
                   icon: const Icon(Icons.chevron_right),
                 ),
               ],
             ),
-
             // Zweite Row: Wochentage
             Row(
               children: [
-                ...wochenTage().map((tag) {
+                ...KalenderService.weekDays.map((tag) {
                   return Expanded(child: Center(child: Text(tag)));
                 }),
               ],
             ),
 
             // Kalenderraster
-            Expanded(child: Kalender(datum: dargestelltesDatum)),
+            Expanded(
+              child: Kalender(onTap: _changeDay, datum: dargestelltesDatum),
+            ),
           ],
         ),
       ),
     );
+  }
+
+  void _changeDay(int newDay) {
+    setState(() {
+      dargestelltesDatum = DateTime(
+        dargestelltesDatum.year,
+        dargestelltesDatum.month,
+        newDay,
+      );
+    });
+  }
+
+  void _changeMonth(int newMonth) {
+    setState(() {
+      dargestelltesDatum = DateTime(dargestelltesDatum.year, newMonth, 1);
+    });
   }
 }

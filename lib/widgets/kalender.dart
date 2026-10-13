@@ -3,13 +3,22 @@ import 'package:kalender_flutter/functions/kalender_felder.dart';
 
 import 'kalender_feld.dart';
 
-/// Stellt die Tagesfelder eines Monats als Kalender-Raster dar.
-class Kalender extends StatelessWidget {
+class Kalender extends StatefulWidget {
+  final void Function(int) onTap;
+
   final DateTime datum;
 
-  const Kalender({super.key, required this.datum});
+  const Kalender({required this.onTap, super.key, required this.datum});
+
+  @override
+  State<Kalender> createState() => _KalenderState();
+}
+
+/// Stellt die Tagesfelder eines Monats als Kalender-Raster dar.
+class _KalenderState extends State<Kalender> {
   @override
   Widget build(BuildContext context) {
+    final datum = widget.datum;
     final tagesFelder = kalenderFelder(datum);
     final anzahlWochen = (tagesFelder.length / 7).ceil();
     final int anzahlAbstaende = anzahlWochen - 1;
@@ -34,7 +43,11 @@ class Kalender extends StatelessWidget {
           ),
           itemCount: tagesFelder.length,
           itemBuilder: (context, index) {
-            return KalenderFeld(tag: tagesFelder[index], datum: datum);
+            return KalenderFeld(
+              onTap: widget.onTap,
+              tag: tagesFelder[index],
+              heute: datum,
+            );
           },
         );
       },

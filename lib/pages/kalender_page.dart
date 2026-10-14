@@ -1,13 +1,15 @@
 import 'package:flutter/material.dart';
 
+import '../widgets/ereignis_anzeige.dart';
+import '../widgets/datums_anzeige.dart';
 import '../functions/KalenderService.dart';
 import '../widgets/kalender.dart';
 import '../functions/monats_name.dart';
 
 /// Stellt die Hauptseite des Comic-Kalenders dar.
 ///
-/// Die Seite ist ein [StatefulWidget], da sich später Inhalte
-/// wie der angezeigte Monat verändern können.
+/// Die Seite ist ein StatefulWidget, da sich der angezeigte
+/// Monat und das ausgewählte Datum verändern können.
 class KalenderPage extends StatefulWidget {
   const KalenderPage({super.key});
 
@@ -15,7 +17,7 @@ class KalenderPage extends StatefulWidget {
   State<KalenderPage> createState() => _KalenderPageState();
 }
 
-/// Verwaltet den veränderbaren Zustand der [KalenderPage].
+/// Verwaltet den veränderbaren Zustand der KalenderPage.
 class _KalenderPageState extends State<KalenderPage> {
   DateTime dargestelltesDatum = DateTime.now();
 
@@ -31,16 +33,17 @@ class _KalenderPageState extends State<KalenderPage> {
             // Erste Row: Monatsnavigation
             Row(
               children: [
-                //IconButton links
+                // Vorheriger Monat
                 IconButton(
                   onPressed: () {
                     _changeMonth(dargestelltesDatum.month - 1);
                   },
                   icon: const Icon(Icons.chevron_left),
                 ),
+
                 Text(monatsName(dargestelltesDatum)),
 
-                //IconButton rechts
+                // Nächster Monat
                 IconButton(
                   onPressed: () {
                     _changeMonth(dargestelltesDatum.month + 1);
@@ -49,6 +52,7 @@ class _KalenderPageState extends State<KalenderPage> {
                 ),
               ],
             ),
+
             // Zweite Row: Wochentage
             Row(
               children: [
@@ -58,16 +62,25 @@ class _KalenderPageState extends State<KalenderPage> {
               ],
             ),
 
-            // Kalenderraster
+            // Oberer Bereich: Kalenderraster
             Expanded(
+              flex: 1,
               child: Kalender(
                 onTap: _changeDay,
                 datum: dargestelltesDatum,
                 ausgewaehltesDatum: ausgewaehltesDatum,
               ),
             ),
-            Text(
-              'Ausgewähltes Datum: ${KalenderService.formatiereDatum(ausgewaehltesDatum ?? DateTime.now())}',
+
+            // Anzeige des ausgewählten Datums
+            DatumsAnzeige(datum: ausgewaehltesDatum ?? DateTime.now()),
+
+            // Unterer Bereich: zukünftige historische Ereignisse
+            Expanded(
+              flex: 1,
+              child: EreignisAnzeige(
+                datum: ausgewaehltesDatum ?? DateTime.now(),
+              ),
             ),
           ],
         ),
@@ -82,6 +95,7 @@ class _KalenderPageState extends State<KalenderPage> {
     });
   }
 
+  /// Wechselt den angezeigten Monat.
   void _changeMonth(int newMonth) {
     setState(() {
       dargestelltesDatum = DateTime(dargestelltesDatum.year, newMonth, 1);

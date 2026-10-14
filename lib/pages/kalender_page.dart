@@ -60,7 +60,14 @@ class _KalenderPageState extends State<KalenderPage> {
 
             // Kalenderraster
             Expanded(
-              child: Kalender(onTap: _changeDay, datum: dargestelltesDatum),
+              child: Kalender(
+                onTap: _changeDay,
+                datum: dargestelltesDatum,
+                ausgewaehltesDatum: ausgewaehltesDatum,
+              ),
+            ),
+            Text(
+              'Ausgewähltes Datum: ${KalenderService.formatiereDatum(ausgewaehltesDatum ?? DateTime.now())}',
             ),
           ],
         ),
@@ -68,13 +75,10 @@ class _KalenderPageState extends State<KalenderPage> {
     );
   }
 
-  void _changeDay(int newDay) {
+  /// Speichert das vom Benutzer ausgewählte Datum.
+  void _changeDay(DateTime newDay) {
     setState(() {
-      dargestelltesDatum = DateTime(
-        dargestelltesDatum.year,
-        dargestelltesDatum.month,
-        newDay,
-      );
+      ausgewaehltesDatum = newDay;
     });
   }
 

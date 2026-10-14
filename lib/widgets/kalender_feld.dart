@@ -2,28 +2,39 @@ import 'package:flutter/material.dart';
 import 'package:kalender_flutter/functions/KalenderService.dart';
 
 class KalenderFeld extends StatelessWidget {
-  final void Function(int) onTap;
+  final void Function(DateTime) onTap;
+
+  final DateTime? ausgewaehltesDatum;
 
   /// Das vollständige Datum dieses Kalenderfeldes.
   final DateTime tag;
 
   /// Der aktuell angezeigte Monat.
-  final DateTime heute;
+  final DateTime angezeigterMonat;
 
   const KalenderFeld({
+    super.key,
     required this.onTap,
     required this.tag,
-    required this.heute,
-    super.key,
+    required this.angezeigterMonat,
+    this.ausgewaehltesDatum,
   });
 
   @override
   Widget build(BuildContext context) {
     final t = tag;
+    final DateTime heutigesDatum = DateTime.now();
+    // DateUtils.isSameDay macht, dass nur der Tag wichtig ist und nicht auch die Uhrzeit.
+    bool istAusgewaehlt = DateUtils.isSameDay(t, ausgewaehltesDatum);
+
     // Prüft, ob das Feld zum angezeigten Monat gehört.
-    bool istAktuellerMonat = t.month == heute.month && t.year == heute.year;
+    bool istAktuellerMonat =
+        t.month == angezeigterMonat.month && t.year == angezeigterMonat.year;
     // Prüft, ob dieses Kalenderfeld den heutigen Tag darstellt.
-    bool istHeute = istAktuellerMonat && t.day == heute.day;
+    bool istHeute =
+        t.year == heutigesDatum.year &&
+        t.month == heutigesDatum.month &&
+        t.day == heutigesDatum.day;
 
     // Bestimmt die Hintergrundfarbe des Kalenderfeldes.
     Color hintergrundFarbe = istHeute
@@ -42,12 +53,15 @@ class KalenderFeld extends StatelessWidget {
 
     return InkWell(
       onTap: () {
-        onTap(tag.day);
+        onTap(tag);
       },
       child: Container(
         decoration: BoxDecoration(
           color: hintergrundFarbe,
-          border: Border.all(color: Colors.black, width: 2.0),
+          border: Border.all(
+            color: istAusgewaehlt ? Colors.purple : Colors.black,
+            width: 3.0,
+          ),
         ),
         child: Center(child: Text(t.day.toString())),
       ),

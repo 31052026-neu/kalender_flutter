@@ -4,11 +4,18 @@ import 'package:kalender_flutter/functions/kalender_felder.dart';
 import 'kalender_feld.dart';
 
 class Kalender extends StatefulWidget {
-  final void Function(int) onTap;
+  final void Function(DateTime) onTap;
+
+  final DateTime? ausgewaehltesDatum;
 
   final DateTime datum;
 
-  const Kalender({required this.onTap, super.key, required this.datum});
+  const Kalender({
+    required this.onTap,
+    this.ausgewaehltesDatum,
+    super.key,
+    required this.datum,
+  });
 
   @override
   State<Kalender> createState() => _KalenderState();
@@ -46,7 +53,8 @@ class _KalenderState extends State<Kalender> {
             return KalenderFeld(
               onTap: widget.onTap,
               tag: tagesFelder[index],
-              heute: datum,
+              angezeigterMonat: datum,
+              ausgewaehltesDatum: widget.ausgewaehltesDatum,
             );
           },
         );

@@ -37,7 +37,10 @@ class _KalenderState extends State<Kalender> {
 
         final double gesamtAbstand = anzahlAbstaende * abstand;
         final hoeheProWoche =
-            (constraints.maxHeight - gesamtAbstand) / anzahlWochen;
+            ((constraints.maxHeight - gesamtAbstand) / anzahlWochen).clamp(
+              0.0,
+              double.infinity,
+            );
 
         return GridView.builder(
           padding: EdgeInsets.zero,

@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:kalender_flutter/functions/KalenderService.dart';
 
+import '../styles/comic_rahmen.dart';
+
 class KalenderFeld extends StatelessWidget {
   final void Function(DateTime) onTap;
 
@@ -58,10 +60,7 @@ class KalenderFeld extends StatelessWidget {
       child: Container(
         decoration: BoxDecoration(
           color: hintergrundFarbe,
-          border: Border.all(
-            color: istAusgewaehlt ? Colors.purple : Colors.black,
-            width: 3.0,
-          ),
+          border: erstelleRahmen(Colors.black, 3),
         ),
         child: Center(child: Text(t.day.toString())),
       ),

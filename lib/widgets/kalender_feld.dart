@@ -52,6 +52,9 @@ class KalenderFeld extends StatelessWidget {
     if (KalenderService.istSonntag(t) && istAktuellerMonat && !istHeute) {
       hintergrundFarbe = Colors.red;
     }
+    if (istAusgewaehlt == true) {
+      hintergrundFarbe = Colors.purpleAccent;
+    }
 
     return InkWell(
       onTap: () {

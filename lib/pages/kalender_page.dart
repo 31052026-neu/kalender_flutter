@@ -71,7 +71,7 @@ class _KalenderPageState extends State<KalenderPage> {
                 ausgewaehltesDatum: ausgewaehltesDatum,
               ),
             ),
-
+            SizedBox(height: 12),
             // Anzeige des ausgewählten Datums
             DatumsAnzeige(datum: ausgewaehltesDatum ?? DateTime.now()),
 

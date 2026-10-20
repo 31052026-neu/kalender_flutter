@@ -23,6 +23,6 @@ class KalenderService {
     //PadLeft ist vom Typ String und deshalb muss man bevor man padLeft benutzt
     //den integer in einen String umwandeln um tage und monate immer in Doppelziffer
     //auszugeben
-    return 'Ausgewähltes Datum:${datum.day.toString().padLeft(2, '0')}.${datum.month.toString().padLeft(2, '0')}.${datum.year}';
+    return '${datum.day.toString().padLeft(2, '0')}.${datum.month.toString().padLeft(2, '0')}.${datum.year}';
   }
 }

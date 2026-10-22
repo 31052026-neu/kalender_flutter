@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 
+import '../services/ereignis_service.dart';
 import '../widgets/ereignis_anzeige.dart';
 import '../widgets/datums_anzeige.dart';
 import '../functions/KalenderService.dart';
@@ -21,7 +22,12 @@ class KalenderPage extends StatefulWidget {
 class _KalenderPageState extends State<KalenderPage> {
   DateTime dargestelltesDatum = DateTime.now();
 
+  final ereignisService = EreignisService();
+
   DateTime? ausgewaehltesDatum;
+  bool isLoading = false;
+
+  List<dynamic> historischeEreignisse = [];
 
   /// Erstellt die Benutzeroberfläche der Kalenderseite.
   @override
@@ -78,9 +84,12 @@ class _KalenderPageState extends State<KalenderPage> {
             // Unterer Bereich: zukünftige historische Ereignisse
             Expanded(
               flex: 1,
-              child: EreignisAnzeige(
-                datum: ausgewaehltesDatum ?? DateTime.now(),
-              ),
+              child: isLoading
+                  ? CircularProgressIndicator()
+                  : EreignisAnzeige(
+                      datum: ausgewaehltesDatum ?? DateTime.now(),
+                      ereignisse: historischeEreignisse,
+                    ),
             ),
           ],
         ),
@@ -89,10 +98,24 @@ class _KalenderPageState extends State<KalenderPage> {
   }
 
   /// Speichert das vom Benutzer ausgewählte Datum.
-  void _changeDay(DateTime newDay) {
+  void _changeDay(DateTime newDay) async {
     setState(() {
       ausgewaehltesDatum = newDay;
+
+      isLoading = true;
     });
+
+    try {
+      final ereignisse = await ereignisService.ladeEreignisse(newDay);
+      // Wenn der State nicht mehr eingebunden ist, beende die Methode sofort.
+      if (!mounted) return;
+
+      setState(() {
+        historischeEreignisse = ereignisse;
+      });
+    } catch (e) {
+      debugPrint('Fehler beim Laden $e');
+    }
   }
 
   /// Wechselt den angezeigten Monat.

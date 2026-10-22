@@ -3,7 +3,7 @@ import 'package:http/http.dart' as http;
 import 'dart:convert';
 
 class EreignisService {
-  Future<http.Response> ladeEreignisse(DateTime datum) async {
+  Future<List<dynamic>> ladeEreignisse(DateTime datum) async {
     String url =
         'https://de.wikipedia.org/api/rest_v1/feed/onthisday/events/${datum.month}/${datum.day}';
     Uri apiUri = Uri.parse(url);

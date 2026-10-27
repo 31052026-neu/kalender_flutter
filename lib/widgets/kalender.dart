@@ -1,32 +1,23 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:kalender_flutter/functions/kalender_felder.dart';
+import 'package:kalender_flutter/provider/provider.dart';
 
 import 'kalender_feld.dart';
 
-class Kalender extends StatefulWidget {
-  final void Function(DateTime) onTap;
-
-  final DateTime? ausgewaehltesDatum;
-
-  final DateTime datum;
-
-  const Kalender({
-    required this.onTap,
-    this.ausgewaehltesDatum,
-    super.key,
-    required this.datum,
-  });
+class Kalender extends ConsumerStatefulWidget {
+  const Kalender({super.key});
 
   @override
-  State<Kalender> createState() => _KalenderState();
+  ConsumerState<Kalender> createState() => _KalenderState();
 }
 
 /// Stellt die Tagesfelder eines Monats als Kalender-Raster dar.
-class _KalenderState extends State<Kalender> {
+class _KalenderState extends ConsumerState<Kalender> {
   @override
   Widget build(BuildContext context) {
-    final datum = widget.datum;
-    final tagesFelder = kalenderFelder(datum);
+    final calendarState = ref.watch(refCalendarState);
+    final tagesFelder = kalenderFelder(calendarState.dargestelltesDatum);
     final anzahlWochen = (tagesFelder.length / 7).ceil();
     final int anzahlAbstaende = anzahlWochen - 1;
 
@@ -53,12 +44,7 @@ class _KalenderState extends State<Kalender> {
           ),
           itemCount: tagesFelder.length,
           itemBuilder: (context, index) {
-            return KalenderFeld(
-              onTap: widget.onTap,
-              tag: tagesFelder[index],
-              angezeigterMonat: datum,
-              ausgewaehltesDatum: widget.ausgewaehltesDatum,
-            );
+            return KalenderFeld(tag: tagesFelder[index]);
           },
         );
       },

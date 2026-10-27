@@ -1,37 +1,31 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:kalender_flutter/functions/KalenderService.dart';
+import 'package:kalender_flutter/provider/provider.dart';
 
 import '../styles/comic_rahmen.dart';
 
-class KalenderFeld extends StatelessWidget {
-  final void Function(DateTime) onTap;
-
-  final DateTime? ausgewaehltesDatum;
-
+class KalenderFeld extends ConsumerWidget {
   /// Das vollständige Datum dieses Kalenderfeldes.
   final DateTime tag;
 
-  /// Der aktuell angezeigte Monat.
-  final DateTime angezeigterMonat;
-
-  const KalenderFeld({
-    super.key,
-    required this.onTap,
-    required this.tag,
-    required this.angezeigterMonat,
-    this.ausgewaehltesDatum,
-  });
+  const KalenderFeld({super.key, required this.tag});
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
+    final calendarState = ref.watch(refCalendarState);
     final t = tag;
     final DateTime heutigesDatum = DateTime.now();
     // DateUtils.isSameDay macht, dass nur der Tag wichtig ist und nicht auch die Uhrzeit.
-    bool istAusgewaehlt = DateUtils.isSameDay(t, ausgewaehltesDatum);
+    bool istAusgewaehlt = DateUtils.isSameDay(
+      t,
+      calendarState.ausgewaehltesDatum,
+    );
 
     // Prüft, ob das Feld zum angezeigten Monat gehört.
     bool istAktuellerMonat =
-        t.month == angezeigterMonat.month && t.year == angezeigterMonat.year;
+        t.month == calendarState.dargestelltesDatum.month &&
+        t.year == calendarState.dargestelltesDatum.year;
     // Prüft, ob dieses Kalenderfeld den heutigen Tag darstellt.
     bool istHeute =
         t.year == heutigesDatum.year &&
@@ -58,7 +52,7 @@ class KalenderFeld extends StatelessWidget {
 
     return InkWell(
       onTap: () {
-        onTap(tag);
+        ref.read(refCalendarState.notifier).changeDay(tag);
       },
       child: Container(
         decoration: BoxDecoration(

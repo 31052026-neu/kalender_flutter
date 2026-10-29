@@ -1,5 +1,5 @@
 import 'package:flutter_test/flutter_test.dart';
-import 'package:kalender_flutter/services/ereignis_service.dart';
+import 'package:kalender_flutter/logik/services/ereignis_service.dart';
 
 void main() {
   test('api test', () async {

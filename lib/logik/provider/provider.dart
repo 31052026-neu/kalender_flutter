@@ -1,5 +1,5 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:kalender_flutter/services/ereignis_service.dart';
+import 'package:kalender_flutter/logik/services/ereignis_service.dart';
 
 final refCalendarState = NotifierProvider<KalendarNotifier, KalendarState>(
   KalendarNotifier.new,

@@ -1,8 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:kalender_flutter/logik/functions/KalenderService.dart';
 
-import '../styles/comic_rahmen.dart';
-
-import 'package:kalender_flutter/functions/KalenderService.dart';
+import 'package:kalender_flutter/ui/styles/comic_rahmen.dart';
 
 class DatumsAnzeige extends StatelessWidget {
   /// Das Datum, das angezeigt werden soll.
@@ -14,7 +13,7 @@ class DatumsAnzeige extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
       decoration: BoxDecoration(
-        color: const Color.fromARGB(255, 204, 38, 233),
+        color: const Color.fromARGB(106, 10, 85, 155),
         borderRadius: BorderRadius.circular(12),
         border: erstelleRahmen(Colors.black, 3),
       ),

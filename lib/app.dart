@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
-
-import 'pages/kalender_page.dart';
+import 'package:kalender_flutter/ui/pages/kalender_page.dart';
 
 /// Stellt die grundlegende Kalender-Anwendung dar.
 ///

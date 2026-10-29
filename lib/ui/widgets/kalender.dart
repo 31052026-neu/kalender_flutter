@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:kalender_flutter/functions/kalender_felder.dart';
-import 'package:kalender_flutter/provider/provider.dart';
+import 'package:kalender_flutter/logik/functions/kalender_felder.dart';
+
+import 'package:kalender_flutter/logik/provider/provider.dart';
 
 import 'kalender_feld.dart';
 

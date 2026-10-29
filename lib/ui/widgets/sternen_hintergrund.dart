@@ -23,13 +23,13 @@ class SternenHintergrund extends CustomPainter {
 
     /// Zeichnet die vollständigen holografischen Ringe.
     final Paint ringFarbe = Paint()
-      ..color = Colors.cyan
+      ..color = const Color.fromARGB(220, 3, 120, 175)
       ..style = PaintingStyle.stroke
-      ..strokeWidth = 2;
+      ..strokeWidth = 1;
 
     /// Zeichnet die helleren, leuchtenden Ringsegmente.
     final Paint segmentFarbe = Paint()
-      ..color = Colors.cyanAccent
+      ..color = const Color.fromARGB(255, 8, 106, 197)
       ..style = PaintingStyle.stroke
       ..strokeWidth = 4
       ..strokeCap = StrokeCap.round
@@ -53,14 +53,30 @@ class SternenHintergrund extends CustomPainter {
     }
 
     /// Mittelpunkt unserer holografischen Ringe.
-    final Offset mittelpunkt = Offset(size.width / 2, size.height / 2);
+    final Offset mittelpunkt = Offset(size.width / 2, size.height / 4.5);
 
-    /// Unterschiedliche Ringgrößen.
+    /// Unterschiedliche Ringdurchmesser.
     final List<double> radien = [40, 65, 90, 110];
 
     /// Zeichnet vier vollständige Ringe mit Ringsegmenten.
     for (int i = 0; i < radien.length; i++) {
       final double radius = radien[i];
+      double aktuellerWinkel = rotationsWinkel;
+
+      switch (radien[i]) {
+        case 40:
+          aktuellerWinkel = rotationsWinkel * 4;
+          break;
+        case 65:
+          aktuellerWinkel = rotationsWinkel * -4;
+          break;
+        case 90:
+          aktuellerWinkel = rotationsWinkel * 1;
+          break;
+        case 110:
+          aktuellerWinkel = rotationsWinkel * -2;
+          break;
+      }
 
       /// Vollständiger Ring.
       canvas.drawCircle(mittelpunkt, radius, ringFarbe);
@@ -78,7 +94,7 @@ class SternenHintergrund extends CustomPainter {
         //größe und Position des Kreises
         ringRechteck,
         //wo das Segment beginnt
-        rotationsWinkel,
+        aktuellerWinkel,
         //Wie lang das sich drehende Segment des Kreises ist.
         pi / 2,
         false,

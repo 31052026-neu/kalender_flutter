@@ -37,7 +37,8 @@ class DatumsAnzeige extends StatelessWidget {
               style: TextStyle(
                 fontSize: 15,
                 fontWeight: FontWeight.bold,
-                color: Colors.black,
+                color: const Color.fromARGB(255, 209, 124, 13),
+                shadows: [Shadow(color: Colors.white, blurRadius: 12)],
               ),
             ),
           ],

@@ -17,7 +17,6 @@ class KalenderApp extends StatelessWidget {
       theme: ThemeData(
         colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
       ),
-
       home: const KalenderPage(),
     );
   }

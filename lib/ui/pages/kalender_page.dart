@@ -7,6 +7,7 @@ import 'package:kalender_flutter/ui/widgets/datums_anzeige.dart';
 import 'package:kalender_flutter/ui/widgets/ereignis_anzeige.dart';
 import 'package:kalender_flutter/ui/widgets/kalender.dart';
 import 'package:kalender_flutter/ui/widgets/sternen_hintergrund.dart';
+import 'package:kalender_flutter/logik/services/sound_service.dart';
 
 /// Stellt die Hauptseite des Kalenders dar.
 class KalenderPage extends ConsumerStatefulWidget {
@@ -19,6 +20,7 @@ class KalenderPage extends ConsumerStatefulWidget {
 class _KalenderPageState extends ConsumerState<KalenderPage>
     with SingleTickerProviderStateMixin {
   late final AnimationController _rotationController;
+  final SoundService _soundService = SoundService();
 
   @override
   void initState() {
@@ -29,6 +31,7 @@ class _KalenderPageState extends ConsumerState<KalenderPage>
       vsync: this,
       duration: const Duration(seconds: 40),
     )..repeat();
+    _soundService.startAmbient();
   }
 
   @override

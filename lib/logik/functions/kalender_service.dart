@@ -64,4 +64,24 @@ class KalenderService {
   static int _ersterWochenTagImMonat(DateTime datum) {
     return DateTime(datum.year, datum.month, 1).weekday;
   }
+
+  static String getMonatsName(DateTime datum) {
+    List<String> monate = [
+      'Januar',
+      'Februar',
+      'März',
+      'April',
+      'Mai',
+      'Juni',
+      'Juli',
+      'August',
+      'September',
+      'Oktober',
+      'November',
+      'Dezember',
+    ];
+    int monatsIndex = datum.month - 1;
+
+    return monate[monatsIndex];
+  }
 }

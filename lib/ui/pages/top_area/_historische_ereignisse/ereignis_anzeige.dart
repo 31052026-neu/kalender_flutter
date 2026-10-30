@@ -4,7 +4,7 @@ import 'package:kalender_flutter/logik/provider/provider.dart';
 
 import 'package:kalender_flutter/logik/controllers/ereignis_scroll_controller.dart';
 
-import 'ereignis_liste.dart';
+import '../../../widgets/ereignis_liste.dart';
 
 /// Verwaltet die Ereignisdaten und den ScrollController.
 class EreignisAnzeige extends ConsumerStatefulWidget {

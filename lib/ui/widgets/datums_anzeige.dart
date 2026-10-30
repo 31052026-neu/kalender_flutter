@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:kalender_flutter/logik/functions/KalenderService.dart';
+import 'package:kalender_flutter/logik/functions/kalender_service.dart';
 
 import 'package:kalender_flutter/ui/styles/comic_rahmen.dart';
 
@@ -25,11 +25,7 @@ class DatumsAnzeige extends StatelessWidget {
           children: [
             Text(
               'Ausgewähltes Datum',
-              style: TextStyle(
-                fontSize: 20,
-                fontWeight: FontWeight.bold,
-                color: Colors.black,
-              ),
+              style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold, color: Colors.black),
             ),
             SizedBox(height: 8.0),
             Text(

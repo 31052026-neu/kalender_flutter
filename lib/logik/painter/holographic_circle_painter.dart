@@ -2,25 +2,12 @@ import 'package:flutter/material.dart';
 
 import 'dart:math';
 
-class SternenHintergrund extends CustomPainter {
-  final double rotationsWinkel;
+class HolographicCirclePainter extends CustomPainter {
+  final double rotationAngle;
 
-  SternenHintergrund({required this.rotationsWinkel});
-
+  const HolographicCirclePainter({required this.rotationAngle});
   @override
   void paint(Canvas canvas, Size size) {
-    /// Zufallsgenerator mit festem Seed (startpunkt).
-    /// Dadurch bleiben die Sternpositionen reproduzierbar.
-    final random = Random(42);
-
-    /// Zeichnet den blauen Lichtschein der Sterne.
-    final Paint sternFarbe = Paint()
-      ..color = Colors.cyan
-      ..maskFilter = const MaskFilter.blur(BlurStyle.normal, 2);
-
-    /// Zeichnet den weißen Kern der Sterne.
-    final Paint sternKern = Paint()..color = Colors.white;
-
     /// Zeichnet die vollständigen holografischen Ringe.
     final Paint ringFarbe = Paint()
       ..color = const Color.fromARGB(220, 3, 120, 175)
@@ -35,23 +22,6 @@ class SternenHintergrund extends CustomPainter {
       ..strokeCap = StrokeCap.round
       ..maskFilter = const MaskFilter.blur(BlurStyle.normal, 2);
 
-    /// Zeichnet 100 Sterne an zufälligen Positionen.
-    for (int i = 0; i < 100; ++i) {
-      final double x = random.nextDouble() * size.width;
-      final double y = random.nextDouble() * size.height;
-
-      /// Zufälliger Radius zwischen 1 und knapp unter 3.
-      final double radius = random.nextDouble() * 2 + 1;
-
-      final Offset position = Offset(x, y);
-
-      /// Blauer Lichtschein.
-      canvas.drawCircle(position, radius, sternFarbe);
-
-      /// Weißer Sternkern.
-      canvas.drawCircle(position, radius / 2, sternKern);
-    }
-
     /// Mittelpunkt unserer holografischen Ringe.
     final Offset mittelpunkt = Offset(size.width / 2, size.height / 4.5);
 
@@ -61,20 +31,20 @@ class SternenHintergrund extends CustomPainter {
     /// Zeichnet vier vollständige Ringe mit Ringsegmenten.
     for (int i = 0; i < radien.length; i++) {
       final double radius = radien[i];
-      double aktuellerWinkel = rotationsWinkel;
+      double aktuellerWinkel = rotationAngle;
 
       switch (radien[i]) {
         case 40:
-          aktuellerWinkel = rotationsWinkel * 4;
+          aktuellerWinkel = rotationAngle * 4;
           break;
         case 65:
-          aktuellerWinkel = rotationsWinkel * -4;
+          aktuellerWinkel = rotationAngle * -4;
           break;
         case 90:
-          aktuellerWinkel = rotationsWinkel * 1;
+          aktuellerWinkel = rotationAngle * 1;
           break;
         case 110:
-          aktuellerWinkel = rotationsWinkel * -2;
+          aktuellerWinkel = rotationAngle * -2;
           break;
       }
 
@@ -82,10 +52,7 @@ class SternenHintergrund extends CustomPainter {
       canvas.drawCircle(mittelpunkt, radius, ringFarbe);
 
       /// Rechteck, das den Kreisbogen begrenzt.
-      final Rect ringRechteck = Rect.fromCircle(
-        center: mittelpunkt,
-        radius: radius,
-      );
+      final Rect ringRechteck = Rect.fromCircle(center: mittelpunkt, radius: radius);
 
       /// Leuchtendes Ringsegment:
       /// Start bei 0 Grad (rechts).
@@ -103,9 +70,8 @@ class SternenHintergrund extends CustomPainter {
     }
   }
 
-  //Hintergrund neu zeichnen, wenn sich der Winkel verändert.
   @override
-  bool shouldRepaint(covariant SternenHintergrund oldDelegate) {
-    return oldDelegate.rotationsWinkel != rotationsWinkel;
+  bool shouldRepaint(covariant HolographicCirclePainter oldDelegate) {
+    return oldDelegate.rotationAngle != rotationAngle;
   }
 }

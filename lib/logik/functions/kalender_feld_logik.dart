@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:kalender_flutter/logik/functions/KalenderService.dart';
+import 'package:kalender_flutter/logik/functions/kalender_service.dart';
 
 /// Enthält die berechneten Eigenschaften eines Kalenderfeldes.
 class KalenderFeldLogik {
@@ -7,19 +7,13 @@ class KalenderFeldLogik {
   final DateTime dargestelltesDatum;
   final DateTime? ausgewaehltesDatum;
 
-  KalenderFeldLogik({
-    required this.tag,
-    required this.dargestelltesDatum,
-    required this.ausgewaehltesDatum,
-  });
+  KalenderFeldLogik({required this.tag, required this.dargestelltesDatum, required this.ausgewaehltesDatum});
 
   /// Prüft, ob der Tag ausgewählt ist.
   bool get istAusgewaehlt => DateUtils.isSameDay(tag, ausgewaehltesDatum);
 
   /// Prüft, ob der Tag zum angezeigten Monat gehört.
-  bool get istAktuellerMonat =>
-      tag.month == dargestelltesDatum.month &&
-      tag.year == dargestelltesDatum.year;
+  bool get istAktuellerMonat => tag.month == dargestelltesDatum.month && tag.year == dargestelltesDatum.year;
 
   /// Prüft, ob der Tag heute ist.
   bool get istHeute => DateUtils.isSameDay(tag, DateTime.now());

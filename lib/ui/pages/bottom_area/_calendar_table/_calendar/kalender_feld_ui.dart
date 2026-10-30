@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-import '../styles/comic_rahmen.dart';
+import '../../../../styles/comic_rahmen.dart';
 
 /// Stellt das Design eines einzelnen Kalenderfeldes dar.
 class KalenderFeldUI extends StatelessWidget {
@@ -8,12 +8,7 @@ class KalenderFeldUI extends StatelessWidget {
   final Color hintergrundFarbe;
   final VoidCallback onTap;
 
-  const KalenderFeldUI({
-    super.key,
-    required this.tag,
-    required this.hintergrundFarbe,
-    required this.onTap,
-  });
+  const KalenderFeldUI({super.key, required this.tag, required this.hintergrundFarbe, required this.onTap});
 
   @override
   Widget build(BuildContext context) {

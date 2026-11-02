@@ -3,8 +3,8 @@ import 'package:kalender_flutter/logik/extensions/format_date.dart';
 import 'package:kalender_flutter/logik/services/ereignis_service.dart';
 import 'package:kalender_flutter/logik/storage/json_storage.dart';
 
-// Hier wurde der Provider ein wenig umgestaltet:
-// Anstatt jedes Mal ereignisService.ladeEreignisse(date) zu rufen, wird geschaut ob in einem weiteren Provider (der _savedEreignisse-Map von unten) bereits das gewählte Datum als Key vorhanden ist. Falls ja, nutzt es einfach dessen Wert. Falls nicht, werden alle Ereignisse diesen Tages geladen.
+// Ich hatte über das Wochenende die Idee zur persistenten Datenspeicherung der API Abrufe. So werden Schritt für Schritt die langen Ladezeiten der API reduziert und in einer JSON File abgespeichert.
+// Hierzu passiert folgendes: Der API Abruf holt sich alle Ereignisse eines Tages (des ausgewählten) und speichert diese, solange sie dort noch nicht sind, in die JSON-File. Wir der Tag erneut abgerufen, holt er sich die Daten aus der File. Die UI selbst kümmert sich dann darum, dass 5 zufällige Ereignisse ausgewählt werden.
 final refHistorischeEreignisse = FutureProvider.family<List<Ereignis>, DateTime>((ref, date) async {
   final ereignisService = EreignisService();
   final key = date.formatGermanStandardWithoutYear();

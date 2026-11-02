@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:kalender_flutter/logik/functions/kalender_service.dart';
-import 'package:kalender_flutter/logik/provider/provider.dart';
+import 'package:kalender_flutter/logik/provider/kalendar_state.dart';
 
 class MonthNavigationBar extends ConsumerWidget {
   const new({super.key});

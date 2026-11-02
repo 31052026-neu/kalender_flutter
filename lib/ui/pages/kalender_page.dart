@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:kalender_flutter/logik/painter/star_background_painter.dart';
-import 'package:kalender_flutter/logik/provider/provider.dart';
+import 'package:kalender_flutter/logik/provider/kalendar_state.dart';
 import 'package:kalender_flutter/ui/pages/bottom_area/bottom_area.dart';
 import 'package:kalender_flutter/ui/pages/top_area/top_area.dart';
 
@@ -27,7 +27,7 @@ class _KalenderPageState extends ConsumerState<KalenderPage> {
   @override
   Widget build(BuildContext context) {
     final calendarState = ref.watch(refCalendarState);
-    final ausgewaehltesDatum = calendarState.ausgewaehltesDatum ?? DateTime.now();
+    final ausgewaehltesDatum = calendarState.ausgewaehltesDatum;
 
     return Scaffold(
       body: Stack(

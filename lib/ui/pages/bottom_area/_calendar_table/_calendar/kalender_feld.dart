@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:kalender_flutter/logik/functions/kalender_feld_logik.dart';
-import 'package:kalender_flutter/logik/provider/provider.dart';
+import 'package:kalender_flutter/logik/provider/kalendar_state.dart';
 
 import 'kalender_feld_ui.dart';
 

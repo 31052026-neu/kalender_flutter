@@ -48,13 +48,6 @@ class KalenderService {
     return datum.weekday == 7;
   }
 
-  static String formatiereDatum(DateTime datum) {
-    //PadLeft ist vom Typ String und deshalb muss man bevor man padLeft benutzt
-    //den integer in einen String umwandeln um tage und monate immer in Doppelziffer
-    //auszugeben
-    return '${datum.day.toString().padLeft(2, '0')}.${datum.month.toString().padLeft(2, '0')}.${datum.year}';
-  }
-
   /// Ermittelt die Anzahl der Tage des angegebenen Monats.
   static int _tageImMonat(DateTime datum) {
     return DateTime(datum.year, datum.month + 1, 0).day;

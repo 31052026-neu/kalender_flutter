@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:kalender_flutter/logik/functions/kalender_service.dart';
+import 'package:kalender_flutter/logik/extensions/format_date.dart';
 
 import 'package:kalender_flutter/ui/styles/comic_rahmen.dart';
 
@@ -29,7 +29,7 @@ class DatumsAnzeige extends StatelessWidget {
             ),
             SizedBox(height: 8.0),
             Text(
-              KalenderService.formatiereDatum(datum),
+              datum.formatGermanStandard(),
               style: TextStyle(
                 fontSize: 15,
                 fontWeight: FontWeight.bold,

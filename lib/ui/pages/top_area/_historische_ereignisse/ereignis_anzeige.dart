@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:kalender_flutter/logik/provider/provider.dart';
+import 'package:kalender_flutter/logik/provider/historical_happenings.dart';
 
 import 'package:kalender_flutter/logik/controllers/ereignis_scroll_controller.dart';
 

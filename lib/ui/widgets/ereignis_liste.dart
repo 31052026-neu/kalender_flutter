@@ -10,16 +10,15 @@ class EreignisListe extends StatelessWidget {
   final AsyncValue<List<Ereignis>> ereignisse;
   final EreignisScrollController controller;
 
-  const EreignisListe({
-    super.key,
-    required this.ereignisse,
-    required this.controller,
-  });
+  const EreignisListe({super.key, required this.ereignisse, required this.controller});
 
   @override
   Widget build(BuildContext context) {
     return ereignisse.when(
       data: (liste) {
+        liste.shuffle();
+        final fiveRandomEreignisseList = liste.sublist(0, 5);
+
         return Listener(
           onPointerDown: (_) => controller.pausieren(),
           onPointerUp: (_) => controller.fortsetzungPlanen(),
@@ -32,7 +31,7 @@ class EreignisListe extends StatelessWidget {
               children: [
                 const SizedBox(height: 10),
 
-                ...liste.map((ereignis) => EreignisKarte(ereignis: ereignis)),
+                ...fiveRandomEreignisseList.map((ereignis) => EreignisKarte(ereignis: ereignis)),
 
                 const SizedBox(height: 10),
               ],
@@ -43,17 +42,12 @@ class EreignisListe extends StatelessWidget {
 
       error: (error, stackTrace) {
         return Center(
-          child: Text(
-            'Fehler: $error',
-            style: const TextStyle(color: Colors.redAccent),
-          ),
+          child: Text('Fehler: $error', style: const TextStyle(color: Colors.redAccent)),
         );
       },
 
       loading: () {
-        return const Center(
-          child: CircularProgressIndicator(color: Colors.cyanAccent),
-        );
+        return const Center(child: CircularProgressIndicator(color: Colors.cyanAccent));
       },
     );
   }
